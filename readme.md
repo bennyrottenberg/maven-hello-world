@@ -1,59 +1,25 @@
-# A simple, minimal Maven example: hello world
+# DevOps-home-assignment-junior
 
-To create the files in this git repo we've already run `mvn archetype:generate` from http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+The project is a simple "Hello world" Maven project with 2 Dockerfiles.
 
-    mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+`Dockerfile` build the Java code and bundles the artifact to a Docker image.  
+`DockerfileMultiStage` builds the artifact using Multi Stage Docker build and bundles the artifact to a smaller Docker image.  
 
-Now, to print "Hello World!", type either...
+Each Dockerfile has it's own GitHub Actions Workflow. 
+- [`maven.yml`](.github/workflows/maven.yml)  
+- [`multistage.yml`](.github/workflows/multistage.yml)  
 
-    cd my-app
-    mvn compile
-    java -cp target/classes com.mycompany.app.App
+## Answers
+ 
+a. Which programming language is this? `Java`  
+b. What is maven?  
+```
+Maven is a build tool developed by Apache to build, publish, and deploy Java apps.
+```
+c. How does maven work? 
+```
+Maven manages build, dependencies, version, publishing for Java applications according to the configurations defined in the `pom.xml` file.
+```
+d. What is this pom.xml everyone keeps mentioning? `See c.`
 
-or...
 
-    cd my-app
-    mvn package
-    java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
-
-Running `mvn clean` will get us back to only the source Java and the `pom.xml`:
-
-    murphy:my-app pdurbin$ mvn clean --quiet
-    murphy:my-app pdurbin$ ack -a -f
-    pom.xml
-    src/main/java/com/mycompany/app/App.java
-    src/test/java/com/mycompany/app/AppTest.java
-
-Running `mvn compile` produces a class file:
-
-    murphy:my-app pdurbin$ mvn compile --quiet
-    murphy:my-app pdurbin$ ack -a -f
-    pom.xml
-    src/main/java/com/mycompany/app/App.java
-    src/test/java/com/mycompany/app/AppTest.java
-    target/classes/com/mycompany/app/App.class
-    murphy:my-app pdurbin$ 
-    murphy:my-app pdurbin$ java -cp target/classes com.mycompany.app.App
-    Hello World!
-
-Running `mvn package` does a compile and creates the target directory, including a jar:
-
-    murphy:my-app pdurbin$ mvn clean --quiet
-    murphy:my-app pdurbin$ mvn package > /dev/null
-    murphy:my-app pdurbin$ ack -a -f
-    pom.xml
-    src/main/java/com/mycompany/app/App.java
-    src/test/java/com/mycompany/app/AppTest.java
-    target/classes/com/mycompany/app/App.class
-    target/maven-archiver/pom.properties
-    target/my-app-1.0-SNAPSHOT.jar
-    target/surefire-reports/com.mycompany.app.AppTest.txt
-    target/surefire-reports/TEST-com.mycompany.app.AppTest.xml
-    target/test-classes/com/mycompany/app/AppTest.class
-    murphy:my-app pdurbin$ 
-    murphy:my-app pdurbin$ java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
-    Hello World!
-
-Running `mvn clean compile exec:java` requires http://mojo.codehaus.org/exec-maven-plugin/
-
-Running `java -jar target/my-app-1.0-SNAPSHOT.jar` requires http://maven.apache.org/plugins/maven-shade-plugin/

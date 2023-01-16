@@ -1,0 +1,23 @@
+FROM maven:3.8.6-openjdk-11-slim as BUILD_IMAGE
+ENV BUILD_DIR=/maven_build
+RUN mkdir -p ${BUILD_DIR}/src/main/java
+WORKDIR ${BUILD_DIR}
+COPY . .
+RUN mvn -B package -e -X --file my-app/pom.xml
+
+FROM adoptopenjdk/openjdk11:alpine-jre
+ARG RUNUSER=benny
+ARG RUNGROUP=${RUNUSER}
+ARG APP_DIR=/home/benny/
+
+RUN \
+    addgroup -S ${RUNGROUP} \
+    && adduser -S ${RUNUSER} -G ${RUNGROUP}
+
+RUN mkdir -p ${APP_DIR} \ 
+    && chown ${RUNUSER}:${RUNGROUP} ${APP_DIR}
+USER ${RUNUSER}
+WORKDIR ${APP_DIR}
+COPY --from=BUILD_IMAGE /maven_build/my-app/target/my-app*.jar my-app.jar
+CMD ["java","-jar","/home/benny/my-app.jar"]
+
