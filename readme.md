@@ -2,6 +2,7 @@
 
 The project is a simple "Hello world" Maven project with 2 Dockerfiles.
 
+
 `Dockerfile` build the Java code and bundles the artifact to a Docker image.  
 `DockerfileMultiStage` builds the artifact using Multi Stage Docker build and bundles the artifact to a smaller Docker image.  
 
