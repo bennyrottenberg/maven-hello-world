@@ -44,5 +44,5 @@ jobs:
     steps:
       - name: Run new version Jar
         run: |
-          docker run bennyroyttenberg/hw-maven:${{needs.build.outputs.jar_version}}
+          docker run bennyroyttenberg/hw-maven-mt:${{needs.build.outputs.jar_version}}
   
